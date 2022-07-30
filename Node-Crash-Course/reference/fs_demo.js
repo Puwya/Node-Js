@@ -14,5 +14,20 @@ fs.writeFile(
   (err) => {
     if (err) throw err;
     console.log("File written to");
+    fs.appendFile(
+      path.join(__dirname, "/test", "hello.txt"),
+      "I love node js",
+      (err) => {
+        if (err) throw err;
+        console.log("file written to");
+      }
+    );
   }
 );
+
+// Read File
+
+fs.readFile(path.join(__dirname, "/test", "hello.txt"), "utf8", (err, data) => {
+  if (err) throw err;
+  console.log(data);
+});
