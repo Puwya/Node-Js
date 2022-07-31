@@ -31,4 +31,19 @@ router.post('/', (req, res) => {
   res.json(members);
 });
 
+// Update member
+router.patch('/:id', (req, res) => {
+  if (members.filter((mem) => mem.id === parseInt(req.params.id)) == 0) {
+    return res.status(400).json({ msg: `ID: ${req.params.id}, does not exist` });
+  }
+  for (let i = 0; i < members.length; i++) {
+    if (members[i].id === parseInt(req.params.id)) {
+      members[i].name = req.body.name;
+      members[i].email = req.body.email;
+      members[i].status = req.body.status;
+    }
+  }
+  res.json(members);
+});
+
 module.exports = router;
