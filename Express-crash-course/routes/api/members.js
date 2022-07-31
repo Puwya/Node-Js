@@ -33,16 +33,30 @@ router.post('/', (req, res) => {
 
 // Update member
 router.patch('/:id', (req, res) => {
-  if (members.filter((mem) => mem.id === parseInt(req.params.id)) == 0) {
+  let index;
+  const found = members.find((mem, i) => {
+    index = i;
+    return mem.id === parseInt(req.params.id);
+  });
+  if (!found) {
     return res.status(400).json({ msg: `ID: ${req.params.id}, does not exist` });
   }
-  for (let i = 0; i < members.length; i++) {
-    if (members[i].id === parseInt(req.params.id)) {
-      members[i].name = req.body.name;
-      members[i].email = req.body.email;
-      members[i].status = req.body.status;
-    }
+  members[index].name = req.body.name;
+  members[index].email = req.body.email;
+  members[index].status = req.body.status;
+  res.json(members);
+});
+
+router.delete('/:id', (req, res) => {
+  let index;
+  const found = members.find((mem, i) => {
+    index = i;
+    return mem.id === parseInt(req.params.id);
+  });
+  if (!found) {
+    return res.status(400).json({ msg: `ID: ${req.params.id}, does not exist` });
   }
+  members.splice(index, 1);
   res.json(members);
 });
 
